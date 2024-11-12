@@ -1,0 +1,16 @@
+"""
+This module sets up the hello_world project with Bazel and Zig.
+"""
+
+module(
+    name = "hello_world",
+    version = "0.0.0",
+)
+
+# https://github.com/aherrmann/rules_zig/releases
+bazel_dep(name = "rules_zig", version = "0.6.0")
+
+# Zig toolchain
+ZIG_VERSION = "0.13.0"
+zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
+zig.toolchain(zig_version = ZIG_VERSION)

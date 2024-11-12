@@ -1,0 +1,31 @@
+load("@rules_zig//zig:defs.bzl", "zig_binary", "zig_configure_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "all_binaries",
+    srcs = [
+        ":binary_host_architecture",
+        ":binary_linux_aarch64",
+        ":binary_linux_x86_64",
+    ],
+)
+
+zig_binary(
+    name = "binary_host_architecture",
+    srcs = glob(["src/**/*.zig"]),
+    main = "src/main.zig",
+    deps = [],
+)
+
+zig_configure_binary(
+    name = "binary_linux_aarch64",
+    actual = ":binary_host_architecture",
+    target = "//target-platforms:linux_aarch64",
+)
+
+zig_configure_binary(
+    name = "binary_linux_x86_64",
+    actual = ":binary_host_architecture",
+    target = "//target-platforms:linux_x86_64",
+)

@@ -1,0 +1,27 @@
+"""
+This module configures the hello_world project with Bazel and Zig.
+"""
+
+module(
+    name = "hello_world",
+    version = "0.0.0",
+)
+
+# Add Bazel rules for Zig (which include zig_binary, zig_library, etc.)
+bazel_dep(name = "rules_zig", version = "0.6.0")
+
+# Add Bazel rules for target platforms configurations
+bazel_dep(name = "platforms", version = "0.0.10")
+
+# Specify Zig version for toolchain configuration
+ZIG_VERSION = "0.13.0"
+zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
+zig.toolchain(zig_version = ZIG_VERSION)
+
+# Add Bazel rules for the hermetic C/C++ toolchain
+# bazel_dep(name = "hermetic_cc_toolchain", version = "3.1.1")
+
+# TODO: Test like this
+# # Zig-based C/C++ toolchain ("hermetic", meaning it includes all necessary dependencies : clang-17, musl and glibc)
+# toolchains = use_extension("@hermetic_cc_toolchain//toolchain:ext.bzl", "toolchains")
+# use_repo(toolchains, "zig_sdk")  # make repositories (created by extensions) available in your build
