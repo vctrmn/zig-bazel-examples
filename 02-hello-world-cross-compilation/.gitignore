@@ -3,7 +3,6 @@ bazel-*
 *.bazelrc.user
 *.bazelversion
 .bazelignore
-.bazelrc
 .bazelci/*
 bazel-out/
 bazel-bin/
