@@ -1,0 +1,8 @@
+load("@rules_zig//zig:defs.bzl", "zig_module")
+
+zig_module(
+    name = "zap",
+    srcs = glob(["data/**/*.zig"]),
+    main = "zap.zig",
+    visibility = ["//visibility:public"],
+)

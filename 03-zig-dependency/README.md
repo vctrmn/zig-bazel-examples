@@ -9,3 +9,7 @@ Run your build:
 And run your target:
 
 - `bazel-bin/hello_world_bin_host` or `bazel run //:hello_world_binary`
+
+`bazel clean --expunge` `bazel build //:hello_world_binary --verbose_failures`
+
+backend_binary
