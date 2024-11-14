@@ -1,6 +1,4 @@
-# Hello World
-
-This code is a simple _hello world_ compilation :
+# Base32 dependency example
 
 Run your build:
 
