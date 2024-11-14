@@ -23,5 +23,5 @@ archive_override(
     strip_prefix = "base32-0.2.0",
     integrity = "sha256-RfeadDvxTgSdbztRYJ8YnoDSiTV7DJuxfQCL9RnFVgc=",
     urls = ["https://github.com/gernest/base32/archive/refs/tags/v0.2.0.tar.gz"],
-    patches = ["//:base32.patch"],
+    patches = ["//:lib_base32.patch"],
 )
