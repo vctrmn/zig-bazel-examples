@@ -3,7 +3,7 @@ This module sets up a Zap backend project with Bazel and Zig.
 """
 
 module(
-    name = "zap_backend",
+    name = "base32_example",
     version = "0.0.0",
 )
 
