@@ -1,0 +1,14 @@
+{
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/bazel-*": true
+    },
+    "files.watcherExclude": {
+        "**/bazel-*": true,
+    },
+    "files.insertFinalNewline": true,
+    "bazel.buildifierFixOnFormat": true,
+    "bazel.queriesShareServer": true,
+    "zig.formattingProvider": "zls",
+    "zig.initialSetupDone": true,
+}

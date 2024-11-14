@@ -7,9 +7,9 @@
 --- /dev/null
 +++ BUILD.bazel
 @@ -0,0 +1,8 @@
-+load("@rules_zig//zig:defs.bzl", "zig_binary")
++load("@rules_zig//zig:defs.bzl", "zig_module")
 +
-+zig_binary(
++zig_module(
 +    name = "zls",
 +    srcs = glob(["src/**/*.zig"]),
 +    main = "src/main.zig",

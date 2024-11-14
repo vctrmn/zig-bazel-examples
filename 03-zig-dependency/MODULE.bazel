@@ -25,3 +25,14 @@ archive_override(
     urls = ["https://github.com/gernest/base32/archive/refs/tags/v0.2.0.tar.gz"],
     patches = ["//:lib_base32.patch"],
 )
+
+bazel_dep(name = "zls", version = ZIG_VERSION, repo_name = "com_github_zigtools_zls")
+
+# Override zls to a fork version with archive_override.
+archive_override(
+    module_name = "zls",
+    strip_prefix = "zls-0.13.0",
+    integrity = "sha256-LoBGtrDedlpL9LuCg0XiutyLgovCV9yTHQ9WsUdoTZ8=",
+    urls = ["https://github.com/zigtools/zls/archive/refs/tags/0.13.0.tar.gz"],
+    patches = ["//:lib_zls.patch"],
+)
