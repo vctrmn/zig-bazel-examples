@@ -1,0 +1,10 @@
+load("@rules_zig//zig:defs.bzl", "zig_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+zig_binary(
+    name = "binary",
+    srcs = glob(["src/**/*.zig"]),
+    main = "src/main.zig",
+    deps = ["@com_github_vctrmn_base32//:base32"],
+)
