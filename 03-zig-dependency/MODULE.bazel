@@ -7,6 +7,7 @@ module(
     version = "0.0.0",
 )
 
+# https://registry.bazel.build/modules/rules_zig
 # https://github.com/aherrmann/rules_zig/releases
 bazel_dep(name = "rules_zig", version = "0.6.0")
 
@@ -15,6 +16,8 @@ ZIG_VERSION = "0.13.0"
 zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
 zig.toolchain(zig_version = ZIG_VERSION)
 
+# Not available in bazel registry
+# https://github.com/gernest/base32/releases
 bazel_dep(name = "base32", version = "0.2.0", repo_name = "com_github_gernest_base32")
 
 # Override base32 to a fork version with archive_override.
