@@ -1,0 +1,17 @@
+--- /dev/null
++++ MODULE.bazel
+@@ -0,0 +1,2 @@
++module(name = "zls", version = "0.13.0")
++bazel_dep(name = "rules_zig", version = "0.6.0")
+
+--- /dev/null
++++ BUILD.bazel
+@@ -0,0 +1,8 @@
++load("@rules_zig//zig:defs.bzl", "zig_module")
++
++zig_module(
++    name = "zls",
++    srcs = glob(["src/**/*.zig"]),
++    main = "src/main.zig",
++    visibility = ["//visibility:public"],
++)
