@@ -15,7 +15,7 @@ ZIG_VERSION = "0.13.0"
 zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
 zig.toolchain(zig_version = ZIG_VERSION)
 
-bazel_dep(name = "base32", version = "1.0.0", repo_name = "com_github_vctrmn_base32")
+bazel_dep(name = "base32", version = "", repo_name = "com_github_vctrmn_base32")
 
 # Override base32 to a fork version with archive_override.
 archive_override(
@@ -23,14 +23,3 @@ archive_override(
     strip_prefix = "base32-1226b44411138c49c341b6bdd56352cdd89bd449",
     urls = ["https://github.com/vctrmn/base32/archive/1226b44411138c49c341b6bdd56352cdd89bd449.tar.gz"],
 )
-
-# bazel_dep(name = "base32", version = "0.2.0", repo_name = "com_github_gernest_base32")
-#
-# # Override base32 to a fork version with archive_override.
-# archive_override(
-#     module_name = "base32",
-#     strip_prefix = "base32-0.2.0",
-#     integrity = "sha256-RfeadDvxTgSdbztRYJ8YnoDSiTV7DJuxfQCL9RnFVgc=",
-#     urls = ["https://github.com/gernest/base32/archive/refs/tags/v0.2.0.tar.gz"],
-#     # patches = ["//third_party:base32.patch"],
-# )
