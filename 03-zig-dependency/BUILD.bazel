@@ -6,5 +6,5 @@ zig_binary(
     name = "binary",
     srcs = glob(["src/**/*.zig"]),
     main = "src/main.zig",
-    deps = ["@com_github_vctrmn_base32//:base32"],
+    deps = ["@com_github_gernest_base32//:base32"],
 )

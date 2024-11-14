@@ -6,11 +6,12 @@
 
 --- /dev/null
 +++ BUILD.bazel
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +load("@rules_zig//zig:defs.bzl", "zig_module")
-+zig_library(
++
++zig_module(
 +    name = "base32",
-+    srcs = ["src/base32.zig"],
++    srcs = glob(["src/**/*.zig"]),
 +    main = "src/base32.zig",
 +    visibility = ["//visibility:public"],
 +)
