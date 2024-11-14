@@ -1,5 +1,5 @@
 """
-This module sets up a Zap backend project with Bazel and Zig.
+This module sets up a base32 encoder project with Bazel and Zig.
 """
 
 module(
