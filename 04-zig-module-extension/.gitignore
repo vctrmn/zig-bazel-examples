@@ -1,0 +1,35 @@
+# Bazel directories and files
+bazel-*
+*.bazelrc.user
+*.bazelversion
+.bazelignore
+.bazelci/*
+bazel-out/
+bazel-bin/
+bazel-testlogs/
+bazel-genfiles/
+
+# Zig build artifacts
+zig-cache/
+zig-out/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.DS_Store
+
+# VSCode
+.idea/
+
+# Dependency management and build files
+.bazel_build_event/
+node_modules/
+*.lock
+*.tar.gz
+
+# Bazel sandbox files (if running tests)
+sandbox/
+
+# Mac-specific files
+.DS_Store
