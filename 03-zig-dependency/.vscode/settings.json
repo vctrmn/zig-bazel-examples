@@ -6,13 +6,4 @@
     "files.watcherExclude": {
         "**/bazel-*": true,
     },
-    "files.insertFinalNewline": true,
-    "bazel.buildifierFixOnFormat": true,
-    "bazel.queriesShareServer": true,
-    "bazel.buildifierExecutable": "@buildifier_prebuilt//:buildifier",
-    "zig.formattingProvider": "zls",
-    "zig.initialSetupDone": true,
-    "zig.path": "${workspaceFolder}/tools/zig.sh",
-    "zig.zls.globalCachePath": null,
-    "zig.zls.path": "${workspaceFolder}/tools/zls.sh",
 }

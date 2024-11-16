@@ -26,32 +26,3 @@ archive_override(
     urls = ["https://github.com/gernest/base32/archive/refs/tags/v0.2.0.tar.gz"],
     patches = ["//:lib_base32.patch"],
 )
-
-bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
-
-# ZLS toolchain
-bazel_dep(name = "hermetic_cc_toolchain", version = "3.1.1")
-
-toolchains = use_extension("@hermetic_cc_toolchain//toolchain:ext.bzl", "toolchains")
-use_repo(toolchains, "zig_sdk")
-
-use_repo(zig, "zig_toolchains")
-
-register_toolchains("@rules_zig//zig/target:all")
-register_toolchains("@zig_toolchains//:all")
-
-zls = use_extension("//third_party/zls:zls.bzl", "repo")
-use_repo(zls, "zls_aarch64-macos", "zls_x86_64-macos", "zls_x86_64-linux")
-
-register_toolchains("//third_party/zls:all")
-
-# bazel_dep(name = "zls", version = ZIG_VERSION, repo_name = "com_github_zigtools_zls")
-#
-# # Override zls to a fork version with archive_override.
-# archive_override(
-#     module_name = "zls",
-#     strip_prefix = "zls-0.13.0",
-#     integrity = "sha256-LoBGtrDedlpL9LuCg0XiutyLgovCV9yTHQ9WsUdoTZ8=",
-#     urls = ["https://github.com/zigtools/zls/archive/refs/tags/0.13.0.tar.gz"],
-#     patches = ["//:lib_zls.patch"],
-# )
