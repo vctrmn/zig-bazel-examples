@@ -15,5 +15,8 @@ ZIG_VERSION = "0.13.0"
 zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
 zig.toolchain(zig_version = ZIG_VERSION)
 
+# Base32 library
+# base32 = use_extension("//third_party/base32:extensions.bzl", "base32")
 base32 = use_extension("//:third_party/base32/extensions.bzl", "base32")
+
 use_repo(base32, "base32")
