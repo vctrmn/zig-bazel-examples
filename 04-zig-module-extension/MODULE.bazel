@@ -9,7 +9,6 @@ module(
 
 # https://github.com/aherrmann/rules_zig/releases
 bazel_dep(name = "rules_zig", version = "0.6.0")
-bazel_dep(name = "buildifier_prebuilt", version = "6.4.0", dev_dependency = True)
 
 # Zig toolchain
 ZIG_VERSION = "0.13.0"
