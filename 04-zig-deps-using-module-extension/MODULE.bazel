@@ -23,5 +23,3 @@ use_repo(base32, "base32")
 # ZLS language server
 zls_archive = use_extension("//third_party/zls:extensions.bzl", "zls_archive")
 use_repo(zls_archive, "zls_aarch64-macos", "zls_x86_64-macos", "zls_x86_64-linux")
-
-register_toolchains("//third_party/zls:all")
