@@ -6,6 +6,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Define ZLS version and SHA256 hashes for different architectures
 _VERSION = "0.13.0"
+
 _ARCHS = {
     "x86_64-linux": struct(
         sha256 = "ec4c1b45caf88e2bcb9ebb16c670603cc596e4f621b96184dfbe837b39cd8410",
@@ -29,18 +30,44 @@ _ARCHS = {
         ],
     ),
 }
+
+_WRAPPER_SCRIPT = """#!/bin/bash
+# Get absolute path to script directory
+SELF_PATH="$$0"
+SELF_DIR="$$(cd "$$(dirname "$$SELF_PATH")" && pwd)"
+
+# Set up Zig environment
+export ZIG_GLOBAL_CACHE_DIR="$$SELF_DIR/zig-cache"
+export ZIG_LOCAL_CACHE_DIR="$$SELF_DIR/zig-cache"
+export ZIG_LIB_DIR="$$SELF_DIR/lib/zig"
+
+# Execute ZLS binary from runfiles
+exec "$$SELF_DIR/zls_bin" "$$@"
+"""
+
 _BUILD_FILE_CONTENT = """
 filegroup(
     name = "zls_binary",
-    srcs = ["zls"],  # Reference the downloaded binary
+    srcs = ["zls"],
     visibility = ["//visibility:public"],
 )
 
 genrule(
-    name = "make_zls_executable",
+    name = "copy_binary",
     srcs = [":zls_binary"],
+    outs = ["zls_bin"],
+    cmd = "cp $(location :zls_binary) $@ && chmod +x $@",
+)
+
+genrule(
+    name = "zls_wrapper",
+    srcs = [":copy_binary"],
     outs = ["zls_executable"],
-    cmd = "chmod +x $(location zls_binary) && cp $(location zls_binary) $(location zls_executable)",
+    cmd = '''
+        echo '{wrapper_script}' > "$@" && chmod +x "$@"
+    '''.format(
+        wrapper_script = """ + repr(_WRAPPER_SCRIPT) + """,
+    ),
     visibility = ["//visibility:public"],
 )
 """
