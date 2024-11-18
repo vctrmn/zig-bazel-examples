@@ -29,18 +29,7 @@ _ARCHS = {
         ],
     ),
 }
-
-# Define the repository rules to download the correct ZLS binary
-def _zls_repo_impl(mctx):
-    for arch, config in _ARCHS.items():
-        http_archive(
-            name = "zls_{}".format(arch),
-            url = "https://github.com/zigtools/zls/releases/download/{version}/zls-{arch}.tar.xz".format(
-                version = _VERSION,
-                arch = arch,
-            ),
-            sha256 = config.sha256,
-            build_file_content = """
+_BUILD_FILE_CONTENT = """
 filegroup(
     name = "zls_binary",
     srcs = ["zls"],  # Reference the downloaded binary
@@ -54,32 +43,20 @@ genrule(
     cmd = "chmod +x $(location zls_binary) && cp $(location zls_binary) $(location zls_executable)",
     visibility = ["//visibility:public"],
 )
-            """,
-        )
+"""
 
-    #     http_archive(
-    #         name = "zls_archive",
-    #         url = "https://github.com/zigtools/zls/releases/download/{version}/zls-{arch}.tar.xz".format(
-    #             version = _VERSION,
-    #             arch = "x86_64-macos",
-    #         ),
-    #         sha256 = "4b63854d6b76810abd2563706e7d768efc7111e44dd8b371d49198e627697a13",
-    #         build_file_content = """
-    # filegroup(
-    #     name = "zls_binary",
-    #     srcs = ["zls"],  # Reference the downloaded binary
-    #     visibility = ["//visibility:public"],
-    # )
-    #
-    # genrule(
-    #     name = "make_zls_executable",
-    #     srcs = [":zls_binary"],
-    #     outs = ["zls_executable"],
-    #     cmd = "chmod +x $(location zls_binary) && cp $(location zls_binary) $(location zls_executable)",
-    #     visibility = ["//visibility:public"],
-    # )
-    #         """,
-    #     )
+# Define the repository rules to download the correct ZLS binary
+def _zls_repo_impl(mctx):
+    for arch, config in _ARCHS.items():
+        http_archive(
+            name = "zls_{}".format(arch),
+            url = "https://github.com/zigtools/zls/releases/download/{version}/zls-{arch}.tar.xz".format(
+                version = _VERSION,
+                arch = arch,
+            ),
+            sha256 = config.sha256,
+            build_file_content = _BUILD_FILE_CONTENT,
+        )
 
     return mctx.extension_metadata(
         reproducible = True,
