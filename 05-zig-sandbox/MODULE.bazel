@@ -1,0 +1,28 @@
+"""
+This module sets up a Zap backend project with Bazel and Zig.
+"""
+
+module(
+    name = "zig_sandbox",
+    version = "0.0.0",
+)
+
+# https://github.com/aherrmann/rules_zig/releases
+bazel_dep(name = "rules_zig", version = "0.6.0")
+bazel_dep(name = "platforms", version = "0.0.10")
+
+# jq Toolchain
+bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
+bazel_lib_toolchains = use_extension("@aspect_bazel_lib//lib:extensions.bzl", "toolchains", dev_dependency = True)
+use_repo(bazel_lib_toolchains, "jq_toolchains")
+
+# Zig toolchain
+ZIG_VERSION = "0.13.0"
+zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
+zig.toolchain(zig_version = ZIG_VERSION)
+
+# ZLS language server
+zls = use_extension("//third_party/zls:zls.bzl", "repo")
+use_repo(zls, "zls_aarch64-macos", "zls_x86_64-macos", "zls_x86_64-linux")
+
+register_toolchains("//third_party/zls:all")
