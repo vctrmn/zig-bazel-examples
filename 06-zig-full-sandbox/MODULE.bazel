@@ -14,3 +14,7 @@ bazel_dep(name = "rules_zig", version = "0.6.0")
 ZIG_VERSION = "0.13.0"
 zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
 zig.toolchain(zig_version = ZIG_VERSION)
+
+# Make mandatory to download the base32 repository
+base32_archive = use_extension("//third_party/base32:extensions.bzl", "base32_archive")
+use_repo(base32_archive, "base32_archive")
