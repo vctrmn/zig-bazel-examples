@@ -1,7 +1,5 @@
-const std = @import("std");
-const log = std.log;
-const HELLO_WORLD = @import("utils/hello_world.zig").hello_world;
+const printHelloWorld = @import("utils/hello.zig").printHelloWorld;
 
 pub fn main() !void {
-    log.info("{s}", .{HELLO_WORLD});
+    try printHelloWorld();
 }

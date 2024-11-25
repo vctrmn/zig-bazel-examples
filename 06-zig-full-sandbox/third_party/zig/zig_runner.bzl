@@ -6,14 +6,8 @@ This module provides a Bazel rule for generating a zig executable script.
 ZIG_RUNNER_TEMPLATE = """\
 #!/bin/bash
 
-# Print a Hello World message
-# echo "Hello, World!"
-
 # Handle the Zig 'build' command and execute the specified build target.
-if [[ "${{1}}" == "build" ]]; then
-    # Print a Hello World message
-    echo "Building World!"
-    
+if [[ "${{1}}" == "build" ]]; then    
     for arg in "${{@:2}}"; do
         if [[ "${{arg}}" == "-Dcmd="* ]]; then
             cd "${{BUILD_WORKSPACE_DIRECTORY}}"
