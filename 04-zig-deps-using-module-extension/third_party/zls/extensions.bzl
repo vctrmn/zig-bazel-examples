@@ -31,43 +31,18 @@ _ARCHS = {
     ),
 }
 
-_WRAPPER_SCRIPT = """#!/bin/bash
-# Get absolute path to script directory
-SELF_PATH="$$0"
-SELF_DIR="$$(cd "$$(dirname "$$SELF_PATH")" && pwd)"
-
-# Set up Zig environment
-export ZIG_GLOBAL_CACHE_DIR="$$SELF_DIR/zig-cache"
-export ZIG_LOCAL_CACHE_DIR="$$SELF_DIR/zig-cache"
-export ZIG_LIB_DIR="$$SELF_DIR/lib/zig"
-
-# Execute ZLS binary from runfiles
-exec "$$SELF_DIR/zls_bin" "$$@"
-"""
-
 _BUILD_FILE_CONTENT = """
 filegroup(
     name = "zls_binary",
     srcs = ["zls"],
-    visibility = ["//visibility:public"],
+    visibility = ["//:__pkg__"],
 )
 
 genrule(
     name = "copy_binary",
     srcs = [":zls_binary"],
-    outs = ["zls_bin"],
-    cmd = "cp $(location :zls_binary) $@ && chmod +x $@",
-)
-
-genrule(
-    name = "zls_wrapper",
-    srcs = [":copy_binary"],
     outs = ["zls_executable"],
-    cmd = '''
-        echo '{wrapper_script}' > "$@" && chmod +x "$@"
-    '''.format(
-        wrapper_script = """ + repr(_WRAPPER_SCRIPT) + """,
-    ),
+    cmd = "cp $(location :zls_binary) $@ && chmod +x $@",
     visibility = ["//visibility:public"],
 )
 """
@@ -95,3 +70,36 @@ def _zls_repo_impl(mctx):
 zls_archive = module_extension(
     implementation = _zls_repo_impl,
 )
+
+# # Toolchains in Bazel allow you to define a set of tools and their configurations that can be used across different build targets,
+# # making it easier to manage and switch between different environments.
+#
+# def _zls_toolchain_impl(mctx):
+#     arch = mctx.attr.arch
+#     config = _ARCHS[arch]
+#     return [platform_common.ToolchainInfo(
+#         zls_binary = mctx.file.zls_binary,
+#         exec_compatible_with = config.exec_compatible_with,
+#     )]
+#
+# zls_toolchain = rule(
+#     implementation = _zls_toolchain_impl,
+#     attrs = {
+#         "arch": attr.string(mandatory = True),
+#         "zls_binary": attr.label(allow_single_file = True, executable = True, mandatory = True),
+#     },
+# )
+#
+# def _zls_register_toolchains_impl():
+#     for arch, config in _ARCHS.items():
+#         native.register_toolchains(
+#             zls_toolchain(
+#                 name = "zls_toolchain_" + arch,
+#                 arch = arch,
+#                 zls_binary = config.zls_binary,
+#             ),
+#         )
+#
+# zls_register_toolchains = repository_rule(
+#     implementation = _zls_register_toolchains_impl,
+# )

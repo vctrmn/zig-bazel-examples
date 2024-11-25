@@ -1,0 +1,82 @@
+# Faster hash function
+startup         --digest_function=blake3
+common          --enable_workspace=false
+
+# Don't need for now
+common          --lockfile_mode=update
+
+# Needed by LLVM and/or XLA
+common          --experimental_repo_remote_exec
+
+# Self explanatory
+common          --enable_platform_specific_config
+common          --enable_bzlmod
+
+# Ensure host tools are built optimized
+build           --host_compilation_mode=opt
+
+# Ensure the local env doesn't leak into the build
+
+# Use a static value for `PATH` and does not inherit `LD_LIBRARY_PATH`. Doesn't let environment
+# variables like `PATH` sneak into the build, which can cause massive cache misses when they change.
+# Use `--action_env=ENV_VARIABLE` if you want to inherit specific environment variables from the
+# client, but note that doing so can prevent cross-user caching if a shared cache is used.
+# Docs: https://bazel.build/reference/command-line-reference#flag--incompatible_strict_action_env
+build           --incompatible_strict_action_env
+
+# We don't to check the built files in the sandbox or repositories
+build           --noexperimental_check_output_files
+fetch           --noexperimental_check_output_files
+query           --noexperimental_check_output_files
+# Speed up all builds by not checking if external repository files have been modified.
+# Docs: https://github.com/bazelbuild/bazel/blob/1af61b21df99edc2fc66939cdf14449c2661f873/src/main/java/com/google/devtools/build/lib/bazel/repository/RepositoryOptions.java#L244
+common          --noexperimental_check_external_repository_files
+
+# Performance
+# Directories used by sandboxed non-worker execution may be reused to avoid unnecessary setup costs.
+# Save time on Sandbox creation and deletion when many of the same kind of action run during the
+# build.
+# Docs: https://bazel.build/reference/command-line-reference#flag--reuse_sandbox_directories
+build           --reuse_sandbox_directories
+
+build           --experimental_output_directory_naming_scheme=diff_against_dynamic_baseline
+
+# You can configure `/tmp/zig-cache`, or similar, specifically,
+# if you can ensure that the directory exists before the build.
+# Mount the zig cache directory to the sandbox.
+build:macos     --sandbox_add_mount_pair=/var/tmp
+build:linux     --sandbox_add_mount_pair=/tmp
+build:windows   --sandbox_add_mount_pair=C:\Temp
+
+# Ensure workers are sandboxed
+build           --worker_sandboxing
+
+# Allows symlinks with spaces
+build           --experimental_inprocess_symlink_creation
+
+# Directories used by sandboxed non-worker execution may be reused to avoid unnecessary setup costs.
+# Save time on Sandbox creation and deletion when many of the same kind of action run during the
+# build.
+# No longer experimental in Bazel 6: https://github.com/bazelbuild/bazel/commit/c1a95501a5611878e5cc43a3cc531f2b9e47835b
+# Docs: https://bazel.build/reference/command-line-reference#flag--reuse_sandbox_directories
+build           --experimental_reuse_sandbox_directories
+
+# Do not build runfiles symlink forests for external repositories under
+# `.runfiles/wsname/external/repo` (in addition to `.runfiles/repo`). This reduces runfiles &
+# sandbox creation times & prevents accidentally depending on this feature which may flip to off by
+# default in the future. Note, some rules may fail under this flag, please file issues with the rule
+# author.
+# Docs: https://bazel.build/reference/command-line-reference#flag--legacy_external_runfiles
+# build --nolegacy_external_runfiles
+
+# Avoid creating a runfiles tree for binaries or tests until it is needed.
+# Docs: https://bazel.build/reference/command-line-reference#flag--build_runfile_links
+# See https://github.com/bazelbuild/bazel/issues/6627
+#
+# This may break local workflows that `build` a binary target, then run the resulting program
+# outside of `bazel run`. In those cases, the script will need to call
+# `bazel build --build_runfile_links //my/binary:target` and then execute the resulting program.
+build           --nobuild_runfile_links
+
+# Build in debug for now, by default
+build           --compilation_mode=dbg

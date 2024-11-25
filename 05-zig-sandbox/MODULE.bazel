@@ -22,7 +22,11 @@ zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
 zig.toolchain(zig_version = ZIG_VERSION)
 
 # ZLS language server
-zls = use_extension("//third_party/zls:zls.bzl", "repo")
-use_repo(zls, "zls_aarch64-macos", "zls_x86_64-macos", "zls_x86_64-linux")
+zls_repo = use_extension("//third_party/zls:zls.bzl", "zls_repo")
+use_repo(zls_repo, "zls_aarch64-macos", "zls_x86_64-macos", "zls_x86_64-linux")
 
 register_toolchains("//third_party/zls:all")
+
+# Base32 library # base32 = use_extension("//:third_party/base32/extensions.bzl", "base32")
+base32 = use_extension("//third_party/base32:extensions.bzl", "base32")
+use_repo(base32, "base32")

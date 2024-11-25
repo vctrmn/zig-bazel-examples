@@ -1,0 +1,4 @@
+{
+    "warn_style": true,
+    "zig_exe_path": "/usr/local/bin/zig"
+}

@@ -1,3 +1,3 @@
 #!/bin/bash
 cd "$(dirname "${BASH_SOURCE[0]}")"
-exec bazel run //third_party/zls:zls -- zig "${@}"
+exec bazel run //third_party/zls:zig_runner -- "${@}"

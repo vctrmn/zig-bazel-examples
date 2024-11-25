@@ -4,11 +4,7 @@ common          --enable_bzlmod
 
 # You can configure `/tmp/zig-cache`, or similar, specifically,
 # if you can ensure that the directory exists before the build.
+# Mount the zig cache directory to the sandbox.
 build:linux     --sandbox_add_mount_pair=/tmp
 build:macos     --sandbox_add_mount_pair=/var/tmp
 build:windows   --sandbox_add_mount_pair=C:\Temp
-
-build:debug     --compilation_mode=opt
-build:debug     --strategy=ZigBuildLib=local
-build:debug     --strategy=ZigBuildObj=local
-build:debug     --strategy=ZigBuildTestLib=local

@@ -1,0 +1,5 @@
+load(":zig_runner.bzl", "zig_runner")
+
+zig_runner(
+    name = "zig_runner",
+)

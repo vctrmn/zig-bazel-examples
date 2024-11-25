@@ -1,0 +1,16 @@
+"""
+This module sets up a zig project sandbox.
+"""
+
+module(
+    name = "zig_sandbox",
+    version = "1.0.0",
+)
+
+# https://github.com/aherrmann/rules_zig/releases
+bazel_dep(name = "rules_zig", version = "0.6.0")
+
+# Zig toolchain
+ZIG_VERSION = "0.13.0"
+zig = use_extension("@rules_zig//zig:extensions.bzl", "zig")
+zig.toolchain(zig_version = ZIG_VERSION)

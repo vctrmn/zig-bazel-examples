@@ -2,5 +2,7 @@
     "editor.formatOnSave": true,
     "zig.formattingProvider": "zls",
     "zig.initialSetupDone": true,
+    "zig.zls.warnStyle": true,
     "zig.zls.path": "${workspaceFolder}/zls.sh",
+    // "zig.zls.zigLibPath": "${workspaceFolder}/bazel-bin/external",
 }

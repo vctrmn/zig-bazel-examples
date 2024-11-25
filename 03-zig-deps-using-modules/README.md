@@ -10,3 +10,11 @@ And run your target:
 
 - `bazel run @com_github_zigtools_zls//:zls -- zls --version`
 - `bazel build @com_github_gernest_base32//:base32`
+
+```
+$(bazel info output_base)/external/com_github_gernest_base32
+```
+
+```
+zls --config-path ./zls.json
+```

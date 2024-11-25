@@ -1,0 +1,6 @@
+{
+    "editor.formatOnSave": true,
+    // "zig.path": "${workspaceFolder}/bazel-bin/third_party/zig/zig_runner.sh",
+    "zig.path": "${workspaceFolder}/zig-wrapper.sh",
+    "zig.initialSetupDone": true,
+}

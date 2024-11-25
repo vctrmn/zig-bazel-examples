@@ -1,14 +1,14 @@
-load(":zls.bzl", "targets", "zig_runner")
+load(":zls.bzl", "create_zls_toolchain_targets", "zig_runner", "zls_runner")
 
 toolchain_type(name = "toolchain_type")
 
-targets(name = "all")
+create_zls_toolchain_targets(name = "all")
 
 zig_runner(
     name = "zig",
 )
 
-# zls_runner(
-#     name = "zls",
-#     zig = ":zig",
-# )
+zls_runner(
+    name = "zls",
+    zig = ":zig",
+)
